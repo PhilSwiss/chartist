@@ -3,10 +3,10 @@ Chartist
 
 Commandline tool to generate images from charsets and texts. For more information on these topics:
 
-* [Demoscene] (https://en.wikipedia.org/wiki/Demoscene) (article explaning the demoscene) © Wikipedia
-* [Bitmapfonts] (https://en.wikipedia.org/wiki/Computer_font) (article also explaning bitmap fonts) © Wikipedia
-* [Pixelfonts] (https://www.creativebloq.com/features/10-remarkably-retro-free-pixel-fonts) (10 remarkably retro free pixel fonts) © Creative Bloq
-* [GrafX2] (http://grafx2.chez.com) (tool for creating and editing bitmap/pixel images and fonts)
+* [Demoscene](https://en.wikipedia.org/wiki/Demoscene) (article explaning the demoscene) © Wikipedia
+* [Bitmapfonts](https://en.wikipedia.org/wiki/Computer_font) (article also explaning bitmap fonts) © Wikipedia
+* [Pixelfonts](https://www.creativebloq.com/features/10-remarkably-retro-free-pixel-fonts) (10 remarkably retro free pixel fonts) © Creative Bloq
+* [GrafX2](http://grafx2.chez.com) (tool for creating and editing bitmap/pixel images and fonts)
 
 
 Requirements:
