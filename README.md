@@ -1,21 +1,13 @@
 Chartist
 =============
 
-.. _description:
-
 Commandline tool to generate images from charsets and texts. For more information on these topics:
 
-* Demoscene_ (article explaning the demoscene) © Wikipedia;
-* Bitmapfonts_ (article also explaning bitmap fonts) © Wikipedia;
-* Pixelfonts_ (10 remarkably retro free pixel fonts) © Creative Bloq;
-* GrafX2_ (tool for creating and editing bitmap/pixel images and fonts);
+* [Demoscene] (https://en.wikipedia.org/wiki/Demoscene) (article explaning the demoscene) © Wikipedia
+* [Bitmapfonts] (https://en.wikipedia.org/wiki/Computer_font) (article also explaning bitmap fonts) © Wikipedia
+* [Pixelfonts] (https://www.creativebloq.com/features/10-remarkably-retro-free-pixel-fonts) (10 remarkably retro free pixel fonts) © Creative Bloq
+* [GrafX2] (http://grafx2.chez.com) (tool for creating and editing bitmap/pixel images and fonts)
 
-
-.. _contents:
-
-.. contents::
-
-.. _requirements:
 
 Requirements:
 =============
@@ -23,8 +15,6 @@ Requirements:
 - Python (3.5, 3.6, 3.7, 3.8, 3.9) - https://www.python.org/
 - Pillow (Python Imaging Library) - https://pypi.org/project/Pillow/
 
-
-.. _installation:
 
 Installation:
 =============
@@ -36,8 +26,6 @@ Windows:
 
     $ python -m pip install pillow
 
-
-.. _quickstart:
 
 Quickstart
 ==========
@@ -60,11 +48,8 @@ Force resolution of generated image:  ::
 Otherwise the resolution is calculated by the size of the chars and the amount of text.
 
 
-.. _options:
-
 Commandline options
 =============================
-::
 
     $ chartist.py --help
 
@@ -98,9 +83,7 @@ Commandline options
        chartist font.tif scroll.txt -s 8 -r 320 256
        chartist letters.tif credits.txt -s 16 32 -r 256
        chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg
-      
-      
-.. _bugtracker:
+
 
 Bug tracker
 -----------
@@ -108,17 +91,7 @@ Bug tracker
 If you have any suggestions, bug reports or annoyances please report them to the issue tracker at https://github.com/PhilSwiss/chartist/issues
 
 
-.. _contributing:
-
 Contributing
 ------------
 
 Development of `chartist` happens at GitHub: https://github.com/PhilSwiss/chartist
-
-
-.. _links:
-
-.. _Demoscene: https://en.wikipedia.org/wiki/Demoscene
-.. _Bitmapfonts: https://en.wikipedia.org/wiki/Computer_font
-.. _Pixelfonts: https://www.creativebloq.com/features/10-remarkably-retro-free-pixel-fonts
-.. _GrafX2: http://grafx2.chez.com/
