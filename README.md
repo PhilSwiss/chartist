@@ -1,12 +1,13 @@
 Chartist
-=============
+========
 
 Commandline tool to generate images from charsets and texts. For more information on these topics:
 
 * [Demoscene](https://en.wikipedia.org/wiki/Demoscene) (article explaning the demoscene) © Wikipedia
 * [Bitmapfonts](https://en.wikipedia.org/wiki/Computer_font) (article also explaning bitmap fonts) © Wikipedia
-* [Pixelfonts](https://www.creativebloq.com/features/10-remarkably-retro-free-pixel-fonts) (10 remarkably retro free pixel fonts) © Creative Bloq
+* [Pixelfonts](http://janeway.exotica.org.uk/search.php?what=0&special=&query=&cat=1630&show=128&tags=&effects=&gfxstyles=&collection_category=0&collection=&year=all&soundformat=&bitplanes=0&gfxsize=0&country=&more=hide) (pixel fonts from various demoscene productions) © Kestra Bitworld
 * [GrafX2](http://grafx2.chez.com) (tool for creating and editing bitmap/pixel images and fonts)
+* [Paint.net](https://www.getpaint.net) (another tool for working with pixel images and fonts)
 
 
 Requirements:
@@ -49,7 +50,7 @@ Otherwise the resolution is calculated by the size of the chars and the amount o
 
 
 Commandline options
-=============================
+===================
 
     $ chartist.py --help
 
@@ -67,12 +68,12 @@ Commandline options
        -r, --resolution   resolution of imagefile with rendered text (x or x and y)
        -c, --color        backgroundcolor of imagefile with rendered text (R G B)
        -v, --version      show version info
-       -h, --help         show this help           [paths [paths ...]]
+       -h, --help         show this help
 
     The optional arguments are only needed if autodetection of size, resolution or
     color doesnt meet the required needs. The rendered image will only be saved, if
     an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.
-    The mappingtable is also a textfile containing all letters, symbols, etc. in the
+    The mappingtable is just a textfile containing all letters, symbols, etc. in the
     same order as they are positioned in the imagefile.
 
     examples:
@@ -83,13 +84,23 @@ Commandline options
        chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg
        chartist charset.png textfile.txt -s 16 38 -l mappingtable.txt
 
+
+Files
+=====
+
+* chartist.py (the commandlinetool itself)
+* font-oneliner-asciirelative.png (a simple pixeled font/charset in ascii-relative order)
+* font-oneliner-nonrelative.png (the same font/charset in a non ascii-relative order, see mappingtable)
+* font-mappingtable.txt (example of a mappingtable for the non ascii-relative font/charset)
+
+
 Bug tracker
------------
+===========
 
 If you have any suggestions, bug reports or annoyances please report them to the issue tracker at https://github.com/PhilSwiss/chartist/issues
 
 
 Contributing
-------------
+============
 
 Development of `chartist` happens at GitHub: https://github.com/PhilSwiss/chartist
