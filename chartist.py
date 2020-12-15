@@ -6,16 +6,7 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated by Decca / RiFT on 25.05.2020 22:45
-#
-
-# - - - DEVELOPMENT VERSION - - -
-#
-# ToDo:
-#  2. new option -l / --lookup, a lookup-file with contains the positions of the chars
-#      in the char image. Just a textfile with the same order and lines asin the char-image
-#
-#  3. charsize autodetect assuming 8x8 / 16x16 / 32x32 by having 60 single chars
+# last updated on 02.06.2020 23:00
 #
 
 # import modules
@@ -36,6 +27,7 @@ class ArgumentParser(argparse.ArgumentParser):
                   "\n"
                   "optional arguments:\n"
                   "  -s, --size         size of the chars (x or x and y)\n"
+                  "  -m, --mappingtable textfile with mappingtable if charset is not ascii-relative\n"
                   "  -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)\n"
                   "  -r, --resolution   resolution of imagefile with rendered text (x or x and y)\n"
                   "  -c, --color        backgroundcolor of imagefile with rendered text (R G B)\n"
@@ -45,13 +37,16 @@ class ArgumentParser(argparse.ArgumentParser):
                   "The optional arguments are only needed if autodetection of size, resolution or\n"
                   "color doesnt meet the required needs. The rendered image will only be saved, if\n"
                   "an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.\n"
+                  "The mappingtable is just a textfile containing all letters, symbols, etc. in the\n"
+                  "same order as they are positioned in the imagefile.\n"
                   "\n"
                   "examples:\n"
                   "  chartist charsetfile.png textfile.txt\n"
                   "  chartist chars.gif text.txt -o screen.png\n"
                   "  chartist font.tif scroll.txt -s 8 -r 320 256\n"
                   "  chartist letters.tif credits.txt -s 16 32 -r 256\n"
-                  "  chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg\n", file=sys.stderr)        
+                  "  chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg\n"        
+                  "  chartist charset.png textfile.txt -s 16 38 -l mappingtable.txt\n", file=sys.stderr)
         self.exit(1, '%s: ERROR: %s\n' % (self.prog, message))
         
 # set commandline arguments
@@ -70,6 +65,11 @@ parser.add_argument('-s', '--size',
                        nargs='+',
                        action='store',
                        help='size of the charset (x or x and y)')
+parser.add_argument('-m', '--mappingtable',
+                       metavar='mappingtable.txt',
+                       type=str,
+                       action='store',
+                       help='textfile with mapping-table')
 parser.add_argument('-o', '--output',
                        metavar='output.png',
                        type=str,
@@ -87,7 +87,7 @@ parser.add_argument('-c', '--color',
                        nargs=3,
                        action='store',
                        help='maincolor of imagefile with rendered text (R G B)')
-parser.add_argument('-v','--version', action='version', version='%(prog)s 1.0')
+parser.add_argument('-v','--version', action='version', version='%(prog)s 1.1')
 args = parser.parse_args()
 
 # check size argument
@@ -105,11 +105,14 @@ letter = 0
 charSize = 0
 offsetX = 0
 offsetY = 0
+locationX = 0
+locationY = 0
 
 # get commandline arguments
 imageFile = args.charset
 textFile = args.text
 charArgs = args.size
+mappingFile = args.mappingtable
 outputFile = args.output
 outputRes = args.resolution
 colorArgs = args.color
@@ -145,7 +148,7 @@ except Exception as error:
 amountLines = len(textLines)
 # get lenght of longest textline
 longestLine = len(max(textLines, key=len))
-print ("  Textlines: " + str(amountLines) + " (max. " + str(longestLine) + "chars)")
+print ("  Textlines: " + str(amountLines) + " (max. " + str(longestLine) + " chars)")
 
 # get or detect size of chars
 if isinstance(charArgs, list):
@@ -174,16 +177,29 @@ if isinstance(outputRes, list):
       print ("    Preview: "  + str(newImgX) + " x " + str(newImgY) )
 
 else:
-      # width by longest textline, added by a char on left and right (frame)
-      newImgX = (longestLine * charSizeX) + (charSizeX * 2)
-      # height by amount of textlines, added by a char on top and bottom (frame)
-      newImgY = (amountLines * (charSizeY * 2) ) + charSizeY
+      # width by longest textline
+      newImgX = longestLine * charSizeX
+      # height by amount of textlines
+      newImgY = amountLines * charSizeY
       print ("    Preview: "  + str(newImgX) + " x " + str(newImgY) + " (auto)")
 
-# add a frame by leaving a space in size of the charsize
-locationX = charSizeX
-locationY = charSizeY
-
+# get or generate mapping-table
+mappingTable = []
+if isinstance(mappingFile, str):
+    try:
+        with open(mappingFile) as file:
+            for line in file:
+                for char in line.rstrip('\n'):
+                    mappingTable.append(char)
+    except Exception as error:
+      print ( "ERROR: " + str(error), file=sys.stderr)
+      exit(1)
+    print ("    Mapping: " + mappingFile + " (" + str(len(mappingTable)) + " entries)")
+else:
+    for asc in range(32, 128):
+        mappingTable.append(chr(asc))
+    print ("    Mapping: ascii-relative (auto)")
+    
 # get or detect dominant color
 if isinstance(colorArgs, list):
       dominantColor = tuple(colorArgs) 
@@ -202,16 +218,19 @@ print ("    generating image...")
 while string < amountLines:
     textString = textLines[string] 
     while letter < len(textString):
-        # get char position via ascii-relative position (space = 32)
-        offsetX = (ord(textString[letter]) - 32)*charSizeX
-        # if image is NOT a one-liner, get chars from multiple lines
+        # get char position from mapping-table
+        if textString[letter] in mappingTable:
+            offsetX = (mappingTable.index(textString[letter])) * charSizeX
+        else:
+            offsetX = 0
+        # if charset-image is NOT a one-liner, get chars from multiple lines
         if offsetX >= orgSizeX:
             charLine = (offsetX // orgSizeX)
             offsetY = (charSizeY * charLine)
             offsetX = offsetX - (orgSizeX * charLine)
         else:
             offsetY = 0
-        # get char from charset-image
+        # copy char from charset-image
         Tile = orgImg.crop((offsetX, offsetY, (offsetX + charSizeX), (offsetY + charSizeY)))
         # paste char to new image
         newImg.paste(Tile, (locationX, locationY))
@@ -220,8 +239,8 @@ while string < amountLines:
         # count to the next letter in text
         letter = letter + 1
         
-    locationY =  locationY + charSizeY + charSizeY # keep space between lines
-    locationX = charSizeX # keep frame/space on new line
+    locationY =  locationY + charSizeY
+    locationX = 0
     string = string + 1
     letter = 0
 

@@ -62,6 +62,7 @@ Commandline options
 
     optional arguments:
        -s, --size         size of the chars (x or x and y)
+	   -m, --mappingtable textfile with mappingtable if charset is not ascii-relative
        -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)
        -r, --resolution   resolution of imagefile with rendered text (x or x and y)
        -c, --color        backgroundcolor of imagefile with rendered text (R G B)
@@ -71,11 +72,8 @@ Commandline options
     The optional arguments are only needed if autodetection of size, resolution or
     color doesnt meet the required needs. The rendered image will only be saved, if
     an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.
-    The widthtable is just a textfile containing the letters, symbols, etc. and their
-    individual widths one per line and seperated by a tab.
     The mappingtable is also a textfile containing all letters, symbols, etc. in the
     same order as they are positioned in the imagefile.
-    Code audit tool for python.
 
     examples:
        chartist charsetfile.png textfile.txt
@@ -83,7 +81,7 @@ Commandline options
        chartist font.tif scroll.txt -s 8 -r 320 256
        chartist letters.tif credits.txt -s 16 32 -r 256
        chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg
-
+       chartist charset.png textfile.txt -s 16 38 -l mappingtable.txt
 
 Bug tracker
 -----------
