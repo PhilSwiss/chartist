@@ -33,17 +33,17 @@ Quickstart
 **Chartist** is easy to use and really straightforward to generate a fontpage.
 Just run `chartist` using the provided font and the test text: ::
 
-    $ chartist.py font-oneliner-relative.png testtext.txt
+    $ chartist.py font-oneliner-asciirelative.png testtext.txt
 
 The generated image should be displayed by the default imageviewer of the operating system.
 
 Write the generated image to disk: ::
 
-    $ chartist.py font-oneliner-relative.png testtext.txt fontpage.png
+    $ chartist.py font-oneliner-asciirelative.png testtext.txt fontpage.png
 
 Force resolution of generated image:  ::
 
-    $ chartist.py font-oneliner-relative.png testtext.txt -r 320 256
+    $ chartist.py font-oneliner-asciirelative.png testtext.txt -r 320 256
 
 Otherwise the resolution is calculated by the size of the chars and the amount of text.
 
