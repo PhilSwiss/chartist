@@ -6,7 +6,7 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated on 02.06.2020 23:00
+# last updated on 04.06.2020 22:50
 #
 
 # import modules
@@ -87,7 +87,7 @@ parser.add_argument('-c', '--color',
                        nargs=3,
                        action='store',
                        help='maincolor of imagefile with rendered text (R G B)')
-parser.add_argument('-v','--version', action='version', version='%(prog)s 1.1')
+parser.add_argument('-v','--version', action='version', version='%(prog)s 1.2')
 args = parser.parse_args()
 
 # check size argument
@@ -222,12 +222,17 @@ while string < amountLines:
         if textString[letter] in mappingTable:
             offsetX = (mappingTable.index(textString[letter])) * charSizeX
         else:
-            offsetX = 0
+            # set out of bounds to skip char
+            offsetX = orgSizeX
+            offsetY = orgSizeY
         # if charset-image is NOT a one-liner, get chars from multiple lines
         if offsetX >= orgSizeX:
             charLine = (offsetX // orgSizeX)
             offsetY = (charSizeY * charLine)
             offsetX = offsetX - (orgSizeX * charLine)
+            # if ofset is out of bounds, the char was not found
+            if offsetY >= orgSizeY:
+                print ("    ERROR: unmatched char \"" + textString[letter] + "\"", file=sys.stderr)
         else:
             offsetY = 0
         # copy char from charset-image
@@ -261,13 +266,13 @@ except ValueError as error:
                   print ("    try to save: " + str(outputFile) + str(orgFormat))
                   newImg.save(outputFile + orgFormat)
             except Exception as error:
-                  print ( "ERROR: " + str(error), file=sys.stderr)
+                  print ( "    ERROR: " + str(error), file=sys.stderr)
                   exit(1)      
       else:
-            print ( "ERROR: " + str(error), file=sys.stderr)
+            print ( "    ERROR: " + str(error), file=sys.stderr)
             exit(1)      
 except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
+      print ( "    ERROR: " + str(error), file=sys.stderr)
       exit(1)
       
 # end message
