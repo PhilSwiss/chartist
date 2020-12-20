@@ -6,7 +6,7 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated on 04.06.2020 22:50
+# last updated on 15.06.2020 00:20
 #
 
 # import modules
@@ -87,7 +87,9 @@ parser.add_argument('-c', '--color',
                        nargs=3,
                        action='store',
                        help='maincolor of imagefile with rendered text (R G B)')
-parser.add_argument('-v','--version', action='version', version='%(prog)s 1.2')
+parser.add_argument('-v','--version',
+                       action='version',
+                       version='%(prog)s 1.3')
 args = parser.parse_args()
 
 # check size argument
@@ -99,10 +101,6 @@ if args.resolution is not None and len(args.resolution) not in (1, 2):
     parser.error("either give 1 or 2 values for resolution, not " + str(len(args.resolution)))
 
 # init vars
-line = 0
-string = 0
-letter = 0
-charSize = 0
 offsetX = 0
 offsetY = 0
 locationX = 0
@@ -215,12 +213,11 @@ newImg = Image.new(mode = "RGB", size = (newImgX, newImgY), color = dominantColo
 
 # generate text with chars
 print ("    generating image...")
-while string < amountLines:
-    textString = textLines[string] 
-    while letter < len(textString):
+for line in textLines:
+    for letter in line:
         # get char position from mapping-table
-        if textString[letter] in mappingTable:
-            offsetX = (mappingTable.index(textString[letter])) * charSizeX
+        if letter in mappingTable:
+            offsetX = (mappingTable.index(letter)) * charSizeX
         else:
             # set out of bounds to skip char
             offsetX = orgSizeX
@@ -230,24 +227,20 @@ while string < amountLines:
             charLine = (offsetX // orgSizeX)
             offsetY = (charSizeY * charLine)
             offsetX = offsetX - (orgSizeX * charLine)
-            # if ofset is out of bounds, the char was not found
+            # if offset is out of bounds, the char was not found
             if offsetY >= orgSizeY:
-                print ("    ERROR: unmatched char \"" + textString[letter] + "\"", file=sys.stderr)
+                print ("    ERROR: unmatched char \"" + letter + "\"", file=sys.stderr)
         else:
             offsetY = 0
         # copy char from charset-image
         Tile = orgImg.crop((offsetX, offsetY, (offsetX + charSizeX), (offsetY + charSizeY)))
         # paste char to new image
         newImg.paste(Tile, (locationX, locationY))
-        # count to the next pasting position
+        # count to the next pasting x-position
         locationX = locationX + charSizeX
-        # count to the next letter in text
-        letter = letter + 1
-        
+    # count to next pasting y-position
     locationY =  locationY + charSizeY
     locationX = 0
-    string = string + 1
-    letter = 0
 
 # show final image when no outputfile
 if not isinstance(outputFile, str):
@@ -266,13 +259,13 @@ except ValueError as error:
                   print ("    try to save: " + str(outputFile) + str(orgFormat))
                   newImg.save(outputFile + orgFormat)
             except Exception as error:
-                  print ( "    ERROR: " + str(error), file=sys.stderr)
+                  print ( "ERROR: " + str(error), file=sys.stderr)
                   exit(1)      
       else:
-            print ( "    ERROR: " + str(error), file=sys.stderr)
+            print ( "ERROR: " + str(error), file=sys.stderr)
             exit(1)      
 except Exception as error:
-      print ( "    ERROR: " + str(error), file=sys.stderr)
+      print ( "ERROR: " + str(error), file=sys.stderr)
       exit(1)
       
 # end message
