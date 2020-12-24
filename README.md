@@ -36,29 +36,31 @@ Just run `chartist` using the provided font and the test text:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt
 
-The generated image should be displayed by the default imageviewer of the operating system.
+    The generated image should be displayed by the default imageviewer of the operating system.
 
 Write the generated image to disk:
 
-    $ chartist.py font-oneliner-asciirelative.png testtext.txt fontpage.png
+    $ chartist.py font-oneliner-asciirelative.png testtext.txt -o fontpage.gif
+	
+	The submited filetype ".gif" sets the format of the output file
 
 Force resolution of generated image:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt -r 320 256
 
-Otherwise the resolution is calculated by the size of the chars and the amount of text.
+    Otherwise the resolution is calculated by the size of the chars and the amount of text.
 
 Render a non ascii-relative font by using a mapping table:
 
     $ chartist.py font-oneliner-nonasciirelative.png testtext.txt -m font-mappingtable.txt
 
-Because the sorting of the font is assumed as ascii-relative by default.
+    Because the sorting of the font is assumed as ascii-relative by default.
 
 You can also use fonts which are spread over multiple lines:
 
     $ chartist.py font-multiline-asciirelative.png testtext.txt -s 16 16
 
-In this case, you have to submit the size of the chars, because autodetection will not work.
+    In this case, you have to submit the size of the chars, because autodetection will not work.
 
 
 Commandline options
@@ -106,6 +108,8 @@ Files
 * chartist.py (the commandlinetool itself)
 * font-oneliner-asciirelative.png (a simple pixeled font/charset in ascii-relative order)
 * font-oneliner-nonrelative.png (the same font/charset in a non ascii-relative order, see mappingtable)
+* font-oneliner-asciirelative-flexwidth.png (the same font/charset with flexible/proportional widths)
+* font-multiline-asciirelative.png (the same font/charset pread over multiple lines)
 * font-mappingtable.txt (example of a mappingtable for the non ascii-relative font/charset)
 * font-widthtable.txt (example of a widthtable for the supplied font/charset)
 
