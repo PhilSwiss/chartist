@@ -13,3 +13,9 @@
 2020-06-15  Philipp
 		* Version 1.3
 		* Simplified the mainloop
+
+2020-06-24  Philipp
+		* Version 1.4
+                * Added width table
+                * Simplified mapping table routine
+		
