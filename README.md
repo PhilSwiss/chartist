@@ -32,21 +32,33 @@ Quickstart
 ==========
 
 **Chartist** is easy to use and really straightforward to generate a fontpage.
-Just run `chartist` using the provided font and the test text: ::
+Just run `chartist` using the provided font and the test text:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt
 
 The generated image should be displayed by the default imageviewer of the operating system.
 
-Write the generated image to disk: ::
+Write the generated image to disk:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt fontpage.png
 
-Force resolution of generated image:  ::
+Force resolution of generated image:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt -r 320 256
 
 Otherwise the resolution is calculated by the size of the chars and the amount of text.
+
+Render a non ascii-relative font by using a mapping table:
+
+    $ chartist.py font-oneliner-nonasciirelative.png testtext.txt -m font-mappingtable.txt
+
+Because the sorting of the font is assumed as ascii-relative by default.
+
+You can also use fonts which are spread over multiple lines:
+
+    $ chartist.py font-multiline-asciirelative.png testtext.txt -s 16 16
+
+In this case, you have to submit the size of the chars, because autodetection will not work.
 
 
 Commandline options
@@ -63,6 +75,7 @@ Commandline options
 
     optional arguments:
        -s, --size         size of the chars (x or x and y)
+	   -w, --widthtable   textfile with widthtable if chars are not of the same width
 	   -m, --mappingtable textfile with mappingtable if charset is not ascii-relative
        -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)
        -r, --resolution   resolution of imagefile with rendered text (x or x and y)
@@ -73,6 +86,8 @@ Commandline options
     The optional arguments are only needed if autodetection of size, resolution or
     color doesnt meet the required needs. The rendered image will only be saved, if
     an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.
+	The widthtable is just a textfile containing the letters, symbols, etc. and their
+    individual widths one per line and seperated by a tab.
     The mappingtable is just a textfile containing all letters, symbols, etc. in the
     same order as they are positioned in the imagefile.
 
@@ -83,7 +98,7 @@ Commandline options
        chartist letters.tif credits.txt -s 16 32 -r 256
        chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg
        chartist charset.png textfile.txt -s 16 38 -l mappingtable.txt
-
+       chartist font.png textfile.txt -s 16 16 -w widthtable.txt
 
 Files
 =====
@@ -92,6 +107,7 @@ Files
 * font-oneliner-asciirelative.png (a simple pixeled font/charset in ascii-relative order)
 * font-oneliner-nonrelative.png (the same font/charset in a non ascii-relative order, see mappingtable)
 * font-mappingtable.txt (example of a mappingtable for the non ascii-relative font/charset)
+* font-widthtable.txt (example of a widthtable for the supplied font/charset)
 
 
 Bug tracker
