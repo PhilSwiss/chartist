@@ -62,6 +62,12 @@ You can also use fonts which are spread over multiple lines:
 
     In this case, you have to submit the size of the chars, because autodetection will not work.
 
+Render a proportional font (some letters have different widths) by using a width table:
+
+    $ chartist.py font-oneliner-asciirelative-flexwidth.png testtext.txt -w font-widthtable.txt
+
+    By default the widths of the chars/letters are of a fixed size.
+
 
 Commandline options
 ===================
