@@ -42,7 +42,7 @@ Write the generated image to disk:
 
     $ chartist.py font-oneliner-asciirelative.png testtext.txt -o fontpage.gif
 	
-	The submited filetype ".gif" sets the format of the output file
+	The submited filetype ".gif" sets the format of the output file.
 
 Force resolution of generated image:
 
@@ -54,7 +54,7 @@ Render a non ascii-relative font by using a mapping table:
 
     $ chartist.py font-oneliner-nonasciirelative.png testtext.txt -m font-mappingtable.txt
 
-    Because the sorting of the font is assumed as ascii-relative by default.
+    Because the order of the font is assumed as ascii-relative by default.
 
 You can also use fonts which are spread over multiple lines:
 
@@ -108,10 +108,10 @@ Files
 * chartist.py (the commandlinetool itself)
 * font-oneliner-asciirelative.png (a simple pixeled font/charset in ascii-relative order)
 * font-oneliner-nonrelative.png (the same font/charset in a non ascii-relative order, see mappingtable)
-* font-oneliner-asciirelative-flexwidth.png (the same font/charset with flexible/proportional widths)
-* font-multiline-asciirelative.png (the same font/charset pread over multiple lines)
+* font-oneliner-asciirelative-flexwidth.png (the same font/charset with flexible/proportional widths, see widthtable)
+* font-multiline-asciirelative.png (the same font/charset spread over multiple lines)
 * font-mappingtable.txt (example of a mappingtable for the non ascii-relative font/charset)
-* font-widthtable.txt (example of a widthtable for the supplied font/charset)
+* font-widthtable.txt (example of a widthtable for the flexwidth font/charset)
 
 
 Bug tracker
