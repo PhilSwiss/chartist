@@ -6,114 +6,119 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated on 24.06.2020 23:45
+# last updated on 11.08.2020 23:45
 #
 
 # import modules
 from PIL import Image
 import argparse
 import sys
-import os
+
 
 # replace argparse-error message with own, nicer help/usage
 class ArgumentParser(argparse.ArgumentParser):
     def error(self, message):
         print("Usage: chartist charsetfile textfile [OPTION...]\n"
-                  "Generate images from charsets and texts\n"
-                  "\n"
-                  "mandatory arguments:\n"
-                  "  charsetfile        imagefile with chars (e.g.: .png, .jpg, etc.)\n"
-                  "  textfile           textfile with textline(s) (plain ascii e.g.: .txt)\n"
-                  "\n"
-                  "optional arguments:\n"
-                  "  -s, --size         size of the chars (x or x and y)\n"
-                  "  -w, --widthtable   textfile with widthtable if chars are not of the same width\n"
-                  "  -m, --mappingtable textfile with mappingtable if charset is not ascii-relative\n"
-                  "  -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)\n"
-                  "  -r, --resolution   resolution of imagefile with rendered text (x or x and y)\n"
-                  "  -c, --color        backgroundcolor of imagefile with rendered text (R G B)\n"
-                  "  -v, --version      show version info\n"
-                  "  -h, --help         show this help\n"
-                  "\n"
-                  "The optional arguments are only needed if autodetection of size, resolution or\n"
-                  "color doesnt meet the required needs. The rendered image will only be saved, if\n"
-                  "an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.\n"
-                  "The widthtable is just a textfile containing the letters, symbols, etc. and their\n"
-                  "individual widths one per line and seperated by a tab.\n"
-                  "The mappingtable is also a textfile containing all letters, symbols, etc. in the\n"
-                  "same order as they are positioned in the imagefile.\n"
-                  "\n"
-                  "examples:\n"
-                  "  chartist charsetfile.png textfile.txt\n"
-                  "  chartist chars.gif text.txt -o screen.png\n"
-                  "  chartist font.tif scroll.txt -s 8 -r 320 256\n"
-                  "  chartist letters.tif credits.txt -s 16 32 -r 256\n"
-                  "  chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg\n"
-                  "  chartist charset.png textfile.txt -s 16 38 -m mappingtable.txt\n"
-                  "  chartist font.png textfile.txt -s 16 16 -w widthtable.txt\n", file=sys.stderr)
+              "Generate images from charsets and texts\n"
+              "\n"
+              "mandatory arguments:\n"
+              "  charsetfile        imagefile with chars (e.g.: .png, .jpg, etc.)\n"
+              "  textfile           textfile with textline(s) (plain ascii e.g.: .txt)\n"
+              "\n"
+              "optional arguments:\n"
+              "  -s, --size         size of the chars (x or x and y)\n"
+              "  -w, --widthtable   textfile with widthtable if chars are not of the same width\n"
+              "  -m, --mappingtable textfile with mappingtable if charset is not ascii-relative\n"
+              "  -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)\n"
+              "  -r, --resolution   resolution of imagefile with rendered text (x or x and y)\n"
+              "  -c, --color        backgroundcolor of imagefile with rendered text (R G B)\n"
+              "  -v, --version      show version info\n"
+              "  -h, --help         show this help\n"
+              "\n"
+              "The optional arguments are only needed if autodetection of size, resolution or\n"
+              "color doesnt meet the required needs. The rendered image will only be saved, if\n"
+              "an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.\n"
+              "The widthtable is just a textfile containing the letters, symbols, etc. and their\n"
+              "individual widths one per line and seperated by a tab.\n"
+              "The mappingtable is also a textfile containing all letters, symbols, etc. in the\n"
+              "same order as they are positioned in the imagefile.\n"
+              "\n"
+              "examples:\n"
+              "  chartist charsetfile.png textfile.txt\n"
+              "  chartist chars.gif text.txt -o screen.png\n"
+              "  chartist font.tif scroll.txt -s 8 -r 320 256\n"
+              "  chartist letters.tif credits.txt -s 16 32 -r 256\n"
+              "  chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg\n"
+              "  chartist charset.png textfile.txt -s 16 38 -m mappingtable.txt\n"
+              "  chartist font.png textfile.txt -s 16 16 -w widthtable.txt\n", file=sys.stderr)
         self.exit(1, '%s: ERROR: %s\n' % (self.prog, message))
-        
+
+
 # set commandline arguments
 parser = ArgumentParser(prog='chartist', add_help=False)
 parser.add_argument('charset',
-                       metavar='charsetfile.png',
-                       type=str,
-                       help='imagefile with chars')
+                    metavar='charsetfile.png',
+                    type=str,
+                    help='imagefile with chars')
 parser.add_argument('text',
-                       metavar='textfile.txt',
-                       type=str,
-                       help='textfile with textline(s)')
+                    metavar='textfile.txt',
+                    type=str,
+                    help='textfile with textline(s)')
 parser.add_argument('-s', '--size',
-                       metavar='8',
-                       type=int,
-                       nargs='+',
-                       action='store',
-                       help='size of the charset (x or x and y)')
+                    metavar='8',
+                    type=int,
+                    nargs='+',
+                    action='store',
+                    help='size of the charset (x or x and y)')
 parser.add_argument('-w', '--widthtable',
-                       metavar='widthtable.txt',
-                       type=str,
-                       action='store',
-                       help='textfile with width-table')
+                    metavar='widthtable.txt',
+                    type=str,
+                    action='store',
+                    help='textfile with width-table')
 parser.add_argument('-m', '--mappingtable',
-                       metavar='mappingtable.txt',
-                       type=str,
-                       action='store',
-                       help='textfile with mapping-table')
+                    metavar='mappingtable.txt',
+                    type=str,
+                    action='store',
+                    help='textfile with mapping-table')
 parser.add_argument('-o', '--output',
-                       metavar='output.png',
-                       type=str,
-                       action='store',
-                       help='imagefile with rendered text')
+                    metavar='output.png',
+                    type=str,
+                    action='store',
+                    help='imagefile with rendered text')
 parser.add_argument('-r', '--resolution',
-                       metavar='320',
-                       type=int,
-                       nargs='+',
-                       action='store',
-                       help='resolution of imagefile with rendered text  (x or x and y)')
+                    metavar='320',
+                    type=int,
+                    nargs='+',
+                    action='store',
+                    help='resolution of imagefile with rendered text  (x or x and y)')
 parser.add_argument('-c', '--color',
-                       metavar='255',
-                       type=int,
-                       nargs=3,
-                       action='store',
-                       help='maincolor of imagefile with rendered text (R G B)')
-parser.add_argument('-v','--version',
-                       action='version',
-                       version='%(prog)s 1.4')
+                    metavar='255',
+                    type=int,
+                    nargs=3,
+                    action='store',
+                    help='maincolor of imagefile with rendered text (R G B)')
+parser.add_argument('-v', '--version',
+                    action='version',
+                    version='%(prog)s 1.5')
 args = parser.parse_args()
+
 
 # check size argument
 if args.size is not None and len(args.size) not in (1, 2):
     parser.error("either give 1 or 2 values for size, not " + str(len(args.size)))
 
+
 # check resolution argument
 if args.resolution is not None and len(args.resolution) not in (1, 2):
     parser.error("either give 1 or 2 values for resolution, not " + str(len(args.resolution)))
+
 
 # init vars
 offsetX = 0
 offsetY = 0
 locationX = 0
 locationY = 0
+
 
 # get commandline arguments
 imageFile = args.charset
@@ -125,22 +130,26 @@ outputFile = args.output
 outputRes = args.resolution
 colorArgs = args.color
 
+
 # load image file
 try:
-      orgImg = Image.open(imageFile)
+    orgImg = Image.open(imageFile)
 except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
-      exit(1)
-print ("    Charset: " + imageFile)
+    print("ERROR: " + str(error), file=sys.stderr)
+    exit(1)
+print("    Charset: " + imageFile)
+
 
 # get image format
 orgFormat = orgImg.format
 orgFormat = '.' + orgFormat.lower()
-print ("     Format: " + orgFormat)
+print("     Format: " + orgFormat)
+
 
 # get image dimensions
 orgSizeX, orgSizeY = orgImg.size
-print (" Resolution: " + str(orgSizeX) + " x " + str(orgSizeY))
+print(" Resolution: " + str(orgSizeX) + " x " + str(orgSizeY))
+
 
 # load text file
 textLines = []
@@ -149,23 +158,25 @@ try:
         for line in file:
             textLines.append(line.rstrip('\n'))
 except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
-      exit(1)
-    
+    print("ERROR: " + str(error), file=sys.stderr)
+    exit(1)
+
+
 # get amount of textlines
 amountLines = len(textLines)
 # get lenght of longest textline
 longestLine = len(max(textLines, key=len))
-print ("  Textlines: " + str(amountLines) + " (max. " + str(longestLine) + " chars)")
+print("  Textlines: " + str(amountLines) + " (max. " + str(longestLine) + " chars)")
+
 
 # get or detect size of chars
 if isinstance(charArgs, list):
     charSizeX = charArgs[0]
-    if len(charArgs) > 1: 
+    if len(charArgs) > 1:
         charSizeY = charArgs[1]
     else:
         charSizeY = charArgs[0]
-    print ("   Charsize: " + str(charSizeX) + " x " + str(charSizeY))
+    print("   Charsize: " + str(charSizeX) + " x " + str(charSizeY))
 else:
     if orgSizeX < orgSizeY:
         charSizeX = orgSizeX
@@ -173,23 +184,25 @@ else:
     else:
         charSizeX = orgSizeY
         charSizeY = orgSizeY
-    print ("   Charsize: " + str(charSizeX) + " x " + str(charSizeY) + " (auto)")
+    print("   Charsize: " + str(charSizeX) + " x " + str(charSizeY) + " (auto)")
+
 
 # get or detect output resolution
 if isinstance(outputRes, list):
-      newImgX = outputRes[0]
-      if len(outputRes) > 1:
-            newImgY = outputRes[1]
-      else:
-            newImgY = outputRes[0]
-      print ("    Preview: "  + str(newImgX) + " x " + str(newImgY) )
+    newImgX = outputRes[0]
+    if len(outputRes) > 1:
+        newImgY = outputRes[1]
+    else:
+        newImgY = outputRes[0]
+    print("    Preview: " + str(newImgX) + " x " + str(newImgY))
 
 else:
-      # width by longest textline
-      newImgX = longestLine * charSizeX
-      # height by amount of textlines
-      newImgY = amountLines * charSizeY
-      print ("    Preview: "  + str(newImgX) + " x " + str(newImgY) + " (auto)")
+    # width by longest textline
+    newImgX = longestLine * charSizeX
+    # height by amount of textlines
+    newImgY = amountLines * charSizeY
+    print("    Preview: " + str(newImgX) + " x " + str(newImgY) + " (auto)")
+
 
 # get or generate width-table
 widthTable = {}
@@ -200,19 +213,20 @@ if isinstance(widthFile, str):
                 letter, width = line.strip().split('\t', 1)
                 widthTable[letter] = int(width.strip())
     except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
-      exit(1)
-    print ("     Widths: " + widthFile + " (" + str(len(widthTable)) + " entries)")
+        print("ERROR: " + str(error), file=sys.stderr)
+        exit(1)
+    print("     Widths: " + widthFile + " (" + str(len(widthTable)) + " entries)")
     # fill up width-table if incomplete
     if len(widthTable) < 96:
         for asc in range(32, 128):
             if not chr(asc) in widthTable:
                 widthTable[chr(asc)] = charSizeX
-        print ("     Widths: added missing entries")
+        print("     Widths: added missing entries")
 else:
     for asc in range(32, 128):
         widthTable[chr(asc)] = charSizeX
-    print ("     Widths: " + str(charSizeX) + " pixels (auto)")
+    print("     Widths: " + str(charSizeX) + " pixels (auto)")
+
 
 # get or generate mapping-table
 mappingTable = []
@@ -223,35 +237,38 @@ if isinstance(mappingFile, str):
                 for char in line.rstrip('\n'):
                     mappingTable.append(char)
     except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
-      exit(1)
-    print ("    Mapping: " + mappingFile + " (" + str(len(mappingTable)) + " entries)")
+        print("ERROR: " + str(error), file=sys.stderr)
+        exit(1)
+    print("    Mapping: " + mappingFile + " (" + str(len(mappingTable)) + " entries)")
     # fill up mapping-table if incomplete
     if len(mappingTable) < 96:
         for asc in range(32, 128):
             if not chr(asc) in mappingTable:
                 mappingTable.append(chr(asc))
-        print ("    Mapping: added missing chars")
+        print("    Mapping: added missing chars")
 else:
     for asc in range(32, 128):
         mappingTable.append(chr(asc))
-    print ("    Mapping: ascii-relative (auto)")
+    print("    Mapping: ascii-relative (auto)")
+
 
 # get or detect dominant color
 if isinstance(colorArgs, list):
-      dominantColor = tuple(colorArgs) 
-      print ("    BGcolor: " + str(dominantColor).replace("(","").replace(")", ""))
+    dominantColor = tuple(colorArgs)
+    print("    BGcolor: " + str(dominantColor).replace("(", "").replace(")", ""))
 else:
-      rgbImg = orgImg.convert('RGB')
-      indexColor = max(rgbImg.getcolors(orgSizeX * orgSizeY))
-      dominantColor = indexColor[1]
-      print ("    BGcolor: " + str(dominantColor).replace("(","").replace(")", " (auto)"))
+    rgbImg = orgImg.convert('RGB')
+    indexColor = max(rgbImg.getcolors(orgSizeX * orgSizeY))
+    dominantColor = indexColor[1]
+    print("    BGcolor: " + str(dominantColor).replace("(", "").replace(")", " (auto)"))
+
 
 # create new, empty image
-newImg = Image.new(mode = "RGB", size = (newImgX, newImgY), color = dominantColor )
+newImg = Image.new(mode="RGB", size=(newImgX, newImgY), color=dominantColor)
+
 
 # generate text with chars
-print ("    generating image...")
+print("    generating image...")
 for line in textLines:
     for letter in line:
         # get char position from mapping-table
@@ -263,7 +280,7 @@ for line in textLines:
             offsetX = offsetX - (orgSizeX * charLine)
             # if offset is out of bounds, the char was not found
             if offsetY >= orgSizeY:
-                print ("    ERROR: unmatched char \"" + letter + "\"", file=sys.stderr)
+                print("    ERROR: unmatched char \"" + letter + "\"", file=sys.stderr)
         else:
             offsetY = 0
         # copy char from charset-image
@@ -273,37 +290,41 @@ for line in textLines:
         # count to the next pasting x-position by width of char
         locationX = locationX + widthTable[letter]
     # count to next pasting y-position
-    locationY =  locationY + charSizeY
+    locationY = locationY + charSizeY
     locationX = 0
-    
+
+
 # show final image when no outputfile
 if not isinstance(outputFile, str):
-      print ("    try to show image...")
-      newImg.show()
-      print ("    done.")
-      exit()
+    print("    try to show image...")
+    newImg.show()
+    print("    done.")
+    exit()
+
 
 # save final image to outputfile
 try:
-      print ("    try to save: " + str(outputFile))
-      newImg.save(outputFile)
+    print("    try to save: " + str(outputFile))
+    newImg.save(outputFile)
 except ValueError as error:
-      if 'unknown file extension' in str(error):
-            try:
-                  print ("    try to save: " + str(outputFile) + str(orgFormat))
-                  newImg.save(outputFile + orgFormat)
-            except Exception as error:
-                  print ( "ERROR: " + str(error), file=sys.stderr)
-                  exit(1)      
-      else:
-            print ( "ERROR: " + str(error), file=sys.stderr)
-            exit(1)      
+    if 'unknown file extension' in str(error):
+        try:
+            print("    try to save: " + str(outputFile) + str(orgFormat))
+            newImg.save(outputFile + orgFormat)
+        except Exception as error:
+            print("ERROR: " + str(error), file=sys.stderr)
+            exit(1)
+    else:
+        print("ERROR: " + str(error), file=sys.stderr)
+        exit(1)
 except Exception as error:
-      print ( "ERROR: " + str(error), file=sys.stderr)
-      exit(1)
-      
+    print("ERROR: " + str(error), file=sys.stderr)
+    exit(1)
+
+
 # end message
-print ("    done.")
+print("    done.")
+
 
 # end of code
 exit()
