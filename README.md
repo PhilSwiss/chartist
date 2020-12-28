@@ -1,25 +1,44 @@
 Chartist
 ========
 
-Commandline tool to generate images from charsets and texts. For more information on these topics:
+Commandline tool to generate images from charsets and texts.
 
-* [Demoscene](https://en.wikipedia.org/wiki/Demoscene) (article explaning the demoscene) © Wikipedia
-* [Bitmapfonts](https://en.wikipedia.org/wiki/Computer_font) (article also explaning bitmap fonts) © Wikipedia
-* [Pixelfonts](http://janeway.exotica.org.uk/search.php?what=0&special=&query=&cat=1630&show=128&tags=&effects=&gfxstyles=&collection_category=0&collection=&year=all&soundformat=&bitplanes=0&gfxsize=0&country=&more=hide) (pixel fonts from various demoscene productions) © Kestra Bitworld
-* [GrafX2](http://grafx2.chez.com) (tool for creating and editing bitmap/pixel images and fonts)
-* [Paint.net](https://www.getpaint.net) (another tool for working with pixel images and fonts)
+While [pixeling](http://grafx2.chez.com/) a [font](http://janeway.exotica.org.uk/search.php?what=0&special=&query=&cat=1630&show=128&tags=&effects=&gfxstyles=&collection_category=0&collection=&year=all&soundformat=&bitplanes=0&gfxsize=0&country=&more=hide) (also known as *charset*) for a [demoscene](https://en.wikipedia.org/wiki/Demoscene) production, it would be nice to know how it will look, using the final text.
+
+It's very common, that some letters looking good in the font itself, but not when used in a real text, consisting of different words and phrases.
+
+To check, if the letters of the font work nicely together, you can cut'n'paste them one by one to form a complete textpage, which can take hours. Or you can use a tool to do the same job in a few seconds: **Chartist**
+
+Chartist reads your graphicsfile with the letters (the font/charset), your textfile with all those words/phrases and will output a new graphicsfile, showing your text by using your pixeled letters, simple as that.
+
+Information
+========
+Pixeled fonts are often used in demos for [Retrocomputers](https://en.wikipedia.org/wiki/Retrocomputing) like [Amiga](https://en.wikipedia.org/wiki/Amiga), [Atari ST](https://en.wikipedia.org/wiki/Atari_ST), [Commodore 64](https://en.wikipedia.org/wiki/Commodore_64), etc.
+
+From [Wikipedia](https://en.wikipedia.org/wiki/Demoscene): 
+
+> The demoscene is a computer art subculture that specializes in producing demos, which are audio-visual presentations that run in real-time on a computer. The main goal of a demo is to show off programming, artistic, and musical skills.
+
+Those fonts are often starting with the **SPACE**-Symbol (*Pos. 32*) and ending with the **Z**-Letter (*Pos. 90*) of the [ASCII-Table](https://en.wikipedia.org/wiki/ASCII#Character_set). If your font is not ordered this *ascii-relative* way, you can simply create a [mapping table](https://github.com/PhilSwiss/chartist/blob/master/font-mappingtable.txt) with the correct order.
+
+Most of those fonts have a fixed size, e.g. **8** by **8** pixels, **16** by **16** pixels and so on. But some symbols like the **.** (dot) or the **,** (comma) look a bit lost when placed in such a grid. To avoid this, you can create a [width table](https://github.com/PhilSwiss/chartist/blob/master/font-widthtable.txt) to define letters or symbols with a smaller width.
+
+The **background color** is simply *auto-detected* by looking which color is used by the majority of the pixels in the font-image. But you can set it manually, if the wrong color is choosen.
+
+The **size** of the letters is *auto-detected* by the height (*y-axis*) of the font-image. If it does not work, you can also set this value manually, expecially when the letters are arranged in multiple lines instead of one, single line.
 
 
-Requirements:
+Requirements
 =============
 
 - Python (3.5, 3.6, 3.7, 3.8, 3.9) - https://www.python.org/
 - Pillow (Python Imaging Library) - https://pypi.org/project/Pillow/
 
 
-Installation:
+Installation
 =============
 If missing, **Pillow** can be installed using **pip**.
+
 Linux: 
 
     $ pip install pillow
