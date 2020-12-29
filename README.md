@@ -141,6 +141,14 @@ Files
 * font-widthtable.txt (example of a widthtable for the flexwidth font/charset)
 
 
+Future ideas
+============
+
+* Outputfiles have the same amount of colors as the font itself and not always truecolor
+* Output of files for the [TIC-80](https://tic80.com/) (I already have some infos on this topic)
+* Output of the notorious Atari ST Scrollerformat (I only heard rumors about this one)
+
+
 Bug tracker
 ===========
 
