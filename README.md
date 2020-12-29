@@ -1,3 +1,5 @@
+![Chartist Logo](https://repository-images.githubusercontent.com/320932478/eb66cf80-49f9-11eb-8430-46f8d50ad519)
+
 Chartist
 ========
 
