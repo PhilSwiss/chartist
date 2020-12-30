@@ -1,4 +1,4 @@
-![Chartist Logo](https://repository-images.githubusercontent.com/320932478/eb66cf80-49f9-11eb-8430-46f8d50ad519)
+![Chartist Logo](https://repository-images.githubusercontent.com/320932478/2d1a7780-4ad9-11eb-809e-fbcd0458cded)
 
 Chartist
 ========
@@ -147,6 +147,7 @@ Future ideas
 * Outputfiles have the same amount of colors as the font itself and not always truecolor
 * Output of files for the [TIC-80](https://tic80.com/) (I already have some infos on this topic)
 * Output of the notorious Atari ST Scrollerformat (I only heard rumors about this one)
+* Support for fonts with lowercase letters (max. ASCII Pos. 122)
 
 
 Bug tracker
