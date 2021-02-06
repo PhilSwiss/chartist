@@ -5,7 +5,7 @@ Chartist
 
 Commandline tool to generate images from charsets and texts.
 
-While [pixeling](http://grafx2.chez.com/) a [font](http://janeway.exotica.org.uk/search.php?what=0&special=&query=&cat=1630&show=128&tags=&effects=&gfxstyles=&collection_category=0&collection=&year=all&soundformat=&bitplanes=0&gfxsize=0&country=&more=hide) (also known as *charset*) for a [demoscene](https://en.wikipedia.org/wiki/Demoscene) production, it would be nice to know how it will look, using the final text.
+While [pixeling](http://grafx2.chez.com/) a [font](https://github.com/ianhan/BitmapFonts) (also known as *charset*) for a [demoscene](https://en.wikipedia.org/wiki/Demoscene) production, it would be nice to know how it will look, using the final text.
 
 It's very common, that some letters looking good in the font itself, but not when used in a real text, consisting of different words and phrases.
 
@@ -25,7 +25,8 @@ Those fonts are often starting with the **SPACE**-Symbol (*Pos. 32*) and ending 
 
 Most of those fonts have a fixed size, e.g. **8** by **8** pixels, **16** by **16** pixels and so on. But some symbols like the **.** (dot) or the **,** (comma) look a bit lost when placed in such a grid. To avoid this, you can create a [width table](https://github.com/PhilSwiss/chartist/blob/master/font-widthtable.txt) to define letters or symbols with a smaller width.
 
-The **background color** is simply *auto-detected* by looking which color is used by the majority of the pixels in the font-image. But you can set it manually, if the wrong color is choosen.
+The **background color** is simply *auto-detected* by looking which color is used by the majority of the pixels in the font-image. But you can set it manually, if the wrong color is choosen.<br>
+The amount of colors for the font is **not** limited. You can have [indexed colors](https://en.wikipedia.org/wiki/Indexed_color) aswell as [true color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)), if the are supported by the image format, for example [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics).
 
 The **size** of the letters is *auto-detected* by the height (*y-axis*) of the font-image. If it does not work, you can also set this value manually, expecially when the letters are arranged in multiple lines instead of one, single line.
 
