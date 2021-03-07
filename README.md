@@ -21,12 +21,16 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Demoscene):
 
 > The demoscene is a computer art subculture that specializes in producing demos, which are audio-visual presentations that run in real-time on a computer. The main goal of a demo is to show off programming, artistic, and musical skills.
 
-Those fonts are often starting with the **SPACE**-Symbol (*Pos. 32*) and ending with the **Z**-Letter (*Pos. 90*) of the [ASCII-Table](https://en.wikipedia.org/wiki/ASCII#Character_set). If your font is not ordered this *ascii-relative* way, you can simply create a [mapping table](https://github.com/PhilSwiss/chartist/blob/master/font-mappingtable.txt) with the correct order.
+Those fonts are often starting with the **SPACE**-Symbol (*Pos. 32*) and ending with the **Z**-Letter (*Pos. 90*) of the [ASCII-Table](https://en.wikipedia.org/wiki/ASCII#Character_set).
+If your font is not ordered this *ascii-relative* way, you can simply create a [mapping table](https://github.com/PhilSwiss/chartist/blob/master/font-mappingtable.txt) with the correct order.
+Chartist supports fonts with chars from Pos. 32 (Space) up to Pos. 126 (Tilde-Symbol), so that all upper- and lowercase letters, numbers and symbols can be used.
 
-Most of those fonts have a fixed size, e.g. **8** by **8** pixels, **16** by **16** pixels and so on. But some symbols like the **.** (dot) or the **,** (comma) look a bit lost when placed in such a grid. To avoid this, you can create a [width table](https://github.com/PhilSwiss/chartist/blob/master/font-widthtable.txt) to define letters or symbols with a smaller width.
+Most of those fonts have a fixed size, e.g. **8** by **8** pixels, **16** by **16** pixels and so on. But some symbols like the **.** (dot) or the **,** (comma) look a bit lost when placed in such a grid.
+To avoid this, you can create a [width table](https://github.com/PhilSwiss/chartist/blob/master/font-widthtable.txt) to define letters or symbols with a smaller width.
 
 The **background color** is simply *auto-detected* by looking which color is used by the majority of the pixels in the font-image. But you can set it manually, if the wrong color is choosen.<br>
-The amount of colors for the font is **not** limited. You can have [indexed colors](https://en.wikipedia.org/wiki/Indexed_color) aswell as [true color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)), if the are supported by the image format, for example [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics).
+The amount of colors for the font is **not** limited. You can have [indexed colors](https://en.wikipedia.org/wiki/Indexed_color) aswell as [true color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)),
+if the are supported by the image format, for example [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics).
 
 The **size** of the letters is *auto-detected* by the height (*y-axis*) of the font-image. If it does not work, you can also set this value manually, expecially when the letters are arranged in multiple lines instead of one, single line.
 
@@ -148,7 +152,6 @@ Future ideas
 * Outputfiles have the same amount of colors as the font itself and not always truecolor
 * Output of files for the [TIC-80](https://tic80.com/) (I already have some infos on this topic)
 * Output of the notorious Atari ST Scrollerformat (I only heard rumors about this one)
-* Support for fonts with lowercase letters (max. ASCII Pos. 122)
 
 
 Bug tracker
