@@ -6,7 +6,7 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated on 11.08.2020 23:45
+# last updated by Decca / RiFT on 17.03.2021 20:30
 #
 
 # import modules
@@ -99,7 +99,7 @@ parser.add_argument('-c', '--color',
                     help='maincolor of imagefile with rendered text (R G B)')
 parser.add_argument('-v', '--version',
                     action='version',
-                    version='%(prog)s 1.5')
+                    version='%(prog)s 1.6')
 args = parser.parse_args()
 
 
@@ -140,15 +140,21 @@ except Exception as error:
 print("    Charset: " + imageFile)
 
 
-# get image format
+# get image mode & format
+orgMode = orgImg.mode
 orgFormat = orgImg.format
 orgFormat = '.' + orgFormat.lower()
-print("     Format: " + orgFormat)
+print("     Format: " + orgFormat + " (" + orgMode + ")")
 
 
 # get image dimensions
 orgSizeX, orgSizeY = orgImg.size
 print(" Resolution: " + str(orgSizeX) + " x " + str(orgSizeY))
+
+
+# get image colors & amount
+orgColors = orgImg.convert('RGB').getcolors(maxcolors=(orgSizeX * orgSizeY))
+print("     Colors: " + str(len(orgColors)))
 
 
 # load text file
@@ -195,7 +201,6 @@ if isinstance(outputRes, list):
     else:
         newImgY = outputRes[0]
     print("    Preview: " + str(newImgX) + " x " + str(newImgY))
-
 else:
     # width by longest textline
     newImgX = longestLine * charSizeX
@@ -252,19 +257,35 @@ else:
     print("    Mapping: ascii-relative (auto)")
 
 
-# get or detect dominant color
+# get or detect background color
 if isinstance(colorArgs, list):
-    dominantColor = tuple(colorArgs)
-    print("    BGcolor: " + str(dominantColor).replace("(", "").replace(")", ""))
+    backgroundColor = tuple(colorArgs)
+    print("    BGcolor: " + str(backgroundColor).replace("(", "").replace(")", ""))
 else:
-    rgbImg = orgImg.convert('RGB')
-    indexColor = max(rgbImg.getcolors(orgSizeX * orgSizeY))
-    dominantColor = indexColor[1]
-    print("    BGcolor: " + str(dominantColor).replace("(", "").replace(")", " (auto)"))
+    # get dominant color
+    dominantColor = max(orgColors)
+    backgroundColor = dominantColor[1]
+    print("    BGcolor: " + str(backgroundColor).replace("(", "").replace(")", " (auto)"))
 
 
-# create new, empty image
-newImg = Image.new(mode="RGB", size=(newImgX, newImgY), color=dominantColor)
+# create new, empty image, but keep mode, colors, palette, etc.
+if len(orgMode) > 1:
+    # if mode rgb or higher, just set background via rgb-value
+    newImg = orgImg.resize((newImgX, newImgY))
+    newImg.paste(backgroundColor, (0, 0, newImgX, newImgY))
+else:
+    # if mode palette or lower, try to map rgb-value...
+    pixelsRGB = list(orgImg.convert('RGB').getdata())
+    indexRGB = next((index for index, value in enumerate(pixelsRGB) if value == backgroundColor), None)
+    # ...to the existing palette
+    if indexRGB is not None:
+        pixelsPalette = list(orgImg.getdata())
+        indexPalette = pixelsPalette[indexRGB]
+        newImg = orgImg.resize((newImgX, newImgY))
+        newImg.paste(indexPalette, (0, 0, newImgX, newImgY))
+    # or create new rgb-image if no match is found
+    else:
+        newImg = Image.new(mode="RGB", size=(newImgX, newImgY), color=backgroundColor)
 
 
 # generate text with chars
