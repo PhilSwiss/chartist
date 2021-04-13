@@ -11,7 +11,7 @@ It's very common, that some letters looking good in the font itself, but not whe
 
 To check, if the letters of the font work nicely together, you can cut'n'paste them one by one to form a complete textpage, which can take hours. Or you can use a tool to do the same job in a few seconds: **Chartist**
 
-Chartist reads your graphicsfile with the letters (the font/charset), your textfile with all those words/phrases and will output a new graphicsfile, showing your text by using your pixeled letters, simple as that.
+Chartist reads your graphicsfile with the letters (the font/charset), your textfile with all those words/phrases and will output a new graphics file, showing your text by using your pixeled letters, simple as that.
 
 Information
 ========
@@ -112,6 +112,7 @@ Commandline options
 	   -w, --widthtable   textfile with widthtable if chars are not of the same width
 	   -m, --mappingtable textfile with mappingtable if charset is not ascii-relative
        -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)
+       -f, --force        force overwrite of outputfile when it already exist
        -r, --resolution   resolution of imagefile with rendered text (x or x and y)
        -c, --color        backgroundcolor of imagefile with rendered text (R G B)
        -v, --version      show version info
@@ -130,6 +131,7 @@ Commandline options
        chartist chars.gif text.txt -o screen.png
        chartist font.tif scroll.txt -s 8 -r 320 256
        chartist letters.tif credits.txt -s 16 32 -r 256
+       chartist fontset.gif phrases.txt -o words.bmp -f
        chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg
        chartist charset.png textfile.txt -s 16 38 -l mappingtable.txt
        chartist font.png textfile.txt -s 16 16 -w widthtable.txt
@@ -137,19 +139,19 @@ Commandline options
 Files
 =====
 
-* chartist.py (the commandlinetool itself)
-* font-oneliner-asciirelative.png (a simple pixeled font/charset in ascii-relative order)
-* font-oneliner-nonrelative.png (the same font/charset in a non ascii-relative order, see mappingtable)
-* font-oneliner-asciirelative-flexwidth.png (the same font/charset with flexible/proportional widths, see widthtable)
-* font-multiline-asciirelative.png (the same font/charset spread over multiple lines)
-* font-mappingtable.txt (example of a mappingtable for the non ascii-relative font/charset)
-* font-widthtable.txt (example of a widthtable for the flexwidth font/charset)
+* **chartist.py** (the commandlinetool itself)
+* **font-oneliner-asciirelative.png** (a simple pixeled font/charset in ascii-relative order)
+* **font-oneliner-nonrelative.png** (the same font/charset in a non ascii-relative order, see mappingtable)
+* **font-oneliner-asciirelative-flexwidth.png** (the same font/charset with flexible/proportional widths, see widthtable)
+* **font-multiline-asciirelative.png** (the same font/charset spread over multiple lines)
+* **font-mappingtable.txt** (example of a mappingtable for the non ascii-relative font/charset)
+* **font-widthtable.txt** (example of a widthtable for the flexwidth font/charset)
 
 
 Future ideas
 ============
 
-* Output of files for the [TIC-80](https://tic80.com/) (I already have some infos on this topic)
+* Output of files for the [TIC-80](https://tic80.com/) - **Done**, I have written [TicMcTile](https://github.com/PhilSwiss/ticmctile) for this job
 * Output of the notorious Atari ST Scrollerformat (I only heard rumors about this one)
 
 

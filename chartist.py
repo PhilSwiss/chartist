@@ -6,12 +6,13 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated by Decca / RiFT on 17.03.2021 20:30
+# last updated by Decca / RiFT on 13.04.2021 22:15
 #
 
 # import modules
 from PIL import Image
 import argparse
+import os.path
 import sys
 
 
@@ -30,6 +31,7 @@ class ArgumentParser(argparse.ArgumentParser):
               "  -w, --widthtable   textfile with widthtable if chars are not of the same width\n"
               "  -m, --mappingtable textfile with mappingtable if charset is not ascii-relative\n"
               "  -o, --output       outputfile with rendered text (e.g.: .png, .jpg, etc.)\n"
+              "  -f, --force        force overwrite of outputfile when it already exist \n"
               "  -r, --resolution   resolution of imagefile with rendered text (x or x and y)\n"
               "  -c, --color        backgroundcolor of imagefile with rendered text (R G B)\n"
               "  -v, --version      show version info\n"
@@ -48,6 +50,7 @@ class ArgumentParser(argparse.ArgumentParser):
               "  chartist chars.gif text.txt -o screen.png\n"
               "  chartist font.tif scroll.txt -s 8 -r 320 256\n"
               "  chartist letters.tif credits.txt -s 16 32 -r 256\n"
+              "  chartist fontset.gif phrases.txt -o words.bmp -f\n"
               "  chartist graphic.jpg greets.txt -c 255 127 64 -o out.jpg\n"
               "  chartist charset.png textfile.txt -s 16 38 -m mappingtable.txt\n"
               "  chartist font.png textfile.txt -s 16 16 -w widthtable.txt\n", file=sys.stderr)
@@ -85,6 +88,9 @@ parser.add_argument('-o', '--output',
                     type=str,
                     action='store',
                     help='imagefile with rendered text')
+parser.add_argument('-f', '--force',
+                    action='store_true',
+                    help='force overwrite of imagefile')
 parser.add_argument('-r', '--resolution',
                     metavar='320',
                     type=int,
@@ -99,7 +105,7 @@ parser.add_argument('-c', '--color',
                     help='maincolor of imagefile with rendered text (R G B)')
 parser.add_argument('-v', '--version',
                     action='version',
-                    version='%(prog)s 1.6')
+                    version='%(prog)s 1.7')
 args = parser.parse_args()
 
 
@@ -127,6 +133,7 @@ charArgs = args.size
 widthFile = args.widthtable
 mappingFile = args.mappingtable
 outputFile = args.output
+outputForce = args.force
 outputRes = args.resolution
 colorArgs = args.color
 
@@ -323,14 +330,26 @@ if not isinstance(outputFile, str):
     exit()
 
 
+# check if output file already exist
+def check_file(outputName):
+    if not outputForce:
+        if os.path.isfile(outputName):
+            print("ERROR: file already exist")
+            exit(1)
+    else:
+        return
+
+
 # save final image to outputfile
+print("    try to save: " + str(outputFile))
+check_file(outputFile)
 try:
-    print("    try to save: " + str(outputFile))
     newImg.save(outputFile)
 except ValueError as error:
     if 'unknown file extension' in str(error):
+        print("    try to save: " + str(outputFile) + str(orgFormat))
+        check_file(outputFile + orgFormat)
         try:
-            print("    try to save: " + str(outputFile) + str(orgFormat))
             newImg.save(outputFile + orgFormat)
         except Exception as error:
             print("ERROR: " + str(error), file=sys.stderr)
