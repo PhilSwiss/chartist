@@ -6,7 +6,7 @@
 #
 # Hint: python -m pip install pillow (install PIL on Windows)
 #
-# last updated by Decca / RiFT on 13.04.2021 22:15
+# last updated by Decca / RiFT on 15.03.2022 19:05
 #
 
 # import modules
@@ -38,7 +38,7 @@ class ArgumentParser(argparse.ArgumentParser):
               "  -h, --help         show this help\n"
               "\n"
               "The optional arguments are only needed if autodetection of size, resolution or\n"
-              "color doesnt meet the required needs. The rendered image will only be saved, if\n"
+              "color does not meet the required needs. The rendered image will only be saved, if\n"
               "an outputfile (-o/--output) is set. Otherwise the image will be shown by the os.\n"
               "The widthtable is just a textfile containing the letters, symbols, etc. and their\n"
               "individual widths one per line and seperated by a tab.\n"
@@ -105,7 +105,7 @@ parser.add_argument('-c', '--color',
                     help='maincolor of imagefile with rendered text (R G B)')
 parser.add_argument('-v', '--version',
                     action='version',
-                    version='%(prog)s 1.7')
+                    version='%(prog)s 1.8')
 args = parser.parse_args()
 
 
@@ -222,7 +222,7 @@ if isinstance(widthFile, str):
     try:
         with open(widthFile) as file:
             for line in file:
-                letter, width = line.strip().split('\t', 1)
+                letter, width = line.split('\t', 1)
                 widthTable[letter] = int(width.strip())
     except Exception as error:
         print("ERROR: " + str(error), file=sys.stderr)
@@ -311,8 +311,8 @@ for line in textLines:
                 print("    ERROR: unmatched char \"" + letter + "\"", file=sys.stderr)
         else:
             offsetY = 0
-        # copy char from charset-image
-        Tile = orgImg.crop((offsetX, offsetY, (offsetX + charSizeX), (offsetY + charSizeY)))
+        # copy char, but only from inbound charset-image
+        Tile = orgImg.crop((offsetX, offsetY, min(orgSizeX, (offsetX + charSizeX)), min(orgSizeY, (offsetY + charSizeY))))
         # paste char to new image
         newImg.paste(Tile, (locationX, locationY))
         # count to the next pasting x-position by width of char

@@ -21,7 +21,7 @@
 		
 2020-08-11  Philipp
 		* Version 1.5
-		* cleaned the code with Pylama
+		* Cleaned the code with Pylama
 
 2021-03-17  Philipp
 		* Version 1.6
@@ -30,3 +30,8 @@
 2021-04-13  Philipp
 		* Version 1.7
 		* Outputfile will now only be overwritten when forced
+
+2022-03-15  Philipp
+		* Version 1.8
+		* Widthtable can now have an entry for the Space/Whitespace-character
+		* Missing chars will not longer result in artifacts/empty blobs
